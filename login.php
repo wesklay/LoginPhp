@@ -17,17 +17,23 @@ class Usuario {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $usuario = $_POST['usuario'];
-    $senha = $_POST['senha'];
+    $usuario = $_POST['usuario'] ?? null;
+    $senha = $_POST['senha'] ?? null;
 
-    $user = new Usuario($usuario, $senha);
-
-    if ($user->autenticar()) {
-        $_SESSION['logado'] = true;
-        header('Location: painel.php');
-        exit();
-    } else {
+    if (!$usuario ||  !$senha) {
         $erro = "Usuário ou Senha Inválido.";
+    }
+
+    if (!($erro ?? null)) {
+        $user = new Usuario($usuario, $senha);
+
+        if ($user->autenticar()) {
+            $_SESSION['logado'] = true;
+            header('Location: painel.php');
+            exit();
+        } else {
+            $erro = "Usuário ou Senha Inválido.";
+        }
     }
 }
 ?>

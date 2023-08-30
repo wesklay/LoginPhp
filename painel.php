@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (!isset($_SESSION)) {
+    session_start();
+}
 
 class Painel {
     public function verificarLogin() {
@@ -17,7 +19,6 @@ class Painel {
 $painel = new Painel();
 $painel->verificarLogin();
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,7 +26,7 @@ $painel->verificarLogin();
 </head>
 <body>
     <h1>Painel</h1>
-    <p><?php echo $painel->exibirMensagem(); ?></p>
+    <p><?= $painel->exibirMensagem() ?></p>
     <a href="logout.php">Sair</a>
 </body>
 </html>
